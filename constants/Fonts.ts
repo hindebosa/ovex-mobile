@@ -4,6 +4,8 @@ export const Fonts = {
     regular: "GilroyRegular",
     medium: "GilroyMedium",
     bold: "GilroyBold",
+    semiBold: "GilroySemiBold",
+    black: "GilroyBlack",
   },
   // Fallback font family
   fallback: {

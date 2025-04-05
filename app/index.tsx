@@ -1,6 +1,11 @@
+import { OVText } from "@/components/ov-text";
 import { View } from "react-native";
 
 const HomeScreen = () => {
-  return <View></View>;
+  return (
+    <View>
+      <OVText>Hello</OVText>
+    </View>
+  );
 };
 export default HomeScreen;

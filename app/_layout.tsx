@@ -14,7 +14,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaView, View, StyleSheet } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Fonts } from "@/constants/Fonts";
-import { LogoHeader } from "@/components/logo-header";
+import { LogoHeader } from "@/components/ov-logo-header";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

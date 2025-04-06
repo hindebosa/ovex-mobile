@@ -33,7 +33,7 @@ export const OVModal: React.FC<ModalProps> = ({
 }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
-  console.log(visible, "visible");
+
   // Animation values
   const slideAnim = React.useRef(new Animated.Value(height)).current;
   const fadeAnim = React.useRef(new Animated.Value(0)).current;

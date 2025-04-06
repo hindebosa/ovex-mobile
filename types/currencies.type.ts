@@ -17,6 +17,7 @@ export interface ICurrencyConversionResponse {
   to_amount: string;
   to_currency: string;
 }
+// Removed redundant CurrencyConversionResponse interface
 
 export interface IDestinationCurrencyType extends ICurrency {
   market: string;

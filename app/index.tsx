@@ -86,8 +86,7 @@ const HomeScreen = () => {
     }
 
     setTargetSelectedCurrency(currency);
-    isOpenModal.onFalse();
-    //setIsTargetCurrencyModalVisible(false);
+    setIsTargetCurrencyModalVisible(false);
   };
 
   return (
@@ -99,7 +98,7 @@ const HomeScreen = () => {
       </View>
       <OVModal
         visible={isTargetCurrencyModalVisible}
-        onClose={isOpenModal.onFalse}
+        onClose={() => setIsTargetCurrencyModalVisible(false)}
       >
         <OVCurrencySelector
           sourceCurrencies={

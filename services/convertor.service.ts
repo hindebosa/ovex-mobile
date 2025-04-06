@@ -28,6 +28,9 @@ export const postConvertCurrency = async (
   currentId?: string
 ): Promise<ICurrencyConversionResponse> => {
   try {
+    if (!currentId) {
+      throw new Error("No market ID provided");
+    }
     const { data } = await axiosInstance.get(
       `rfq/get_quote?market=${currentId}&from_amount=${sourceAmount}&side=buy&prefunded=0`
     );

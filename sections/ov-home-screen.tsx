@@ -4,6 +4,7 @@ import { OVModal } from "@/components/ov-modal";
 import OVResultsDisplay from "@/components/ov-result-display";
 import { OVText } from "@/components/ov-text";
 import { useHome } from "@/providers/home.provider";
+import { filterCurrenciesByTradingPairs } from "@/util/currency";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 
 const HomeView = () => {
@@ -22,6 +23,7 @@ const HomeView = () => {
     sourceCurrenciesList,
     markets,
     targetCurrency,
+    currencyId,
   } = useHome();
   return (
     <View style={styles.container}>
@@ -62,19 +64,23 @@ const HomeView = () => {
           sourceCurrencies={
             activeCurrencySelector === "target"
               ? sourceCurrenciesList
-              : sourceCurrenciesList?.filter((currency) => {
-                  // When selecting destination currency, filter based on available trading pairs
-                  const pair = markets?.[targetCurrency];
-                  if (!pair) return false;
+              : filterCurrenciesByTradingPairs(
+                  sourceCurrenciesList || [],
+                  markets?.[currencyId] || []
+                )
+            // : sourceCurrenciesList?.filter((currency) => {
+            //     // When selecting destination currency, filter based on available trading pairs
+            //     const pair = markets?.[targetCurrency];
+            //     if (!pair) return false;
 
-                  // Get all base currencies from trading pairs
-                  const baseCurrencies = Object.values(pair).map(
-                    (p: any) => p.base_currency
-                  );
+            //     // Get all base currencies from trading pairs
+            //     const baseCurrencies = Object.values(pair).map(
+            //       (p: any) => p.base_currency
+            //     );
 
-                  // Only show currencies that have trading pairs with the target currency
-                  return baseCurrencies.includes(currency.id);
-                })
+            //     // Only show currencies that have trading pairs with the target currency
+            //     return baseCurrencies.includes(currency.id);
+            //   })
           }
           destinationCurrency={
             activeCurrencySelector === "target"

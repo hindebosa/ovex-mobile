@@ -57,7 +57,7 @@ const OVConverterView: FC<OVConvertorViewProps> = ({
                 }`
               : ""
           }
-          placeholder="Select a Source"
+          placeholder="Select a Source Currency"
           leftAdornment={
             sourceSelectedCurrency ? (
               <OVCurrencyImage currency={sourceSelectedCurrency} />

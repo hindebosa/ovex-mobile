@@ -17,6 +17,7 @@ import { createContext, ReactNode, useState } from "react";
 interface HomeContextType {
   // State
   sourceAmount: string;
+  currencyId: string;
   sourceCurrenciesList: ICurrency[] | undefined;
   targetCurrency: string;
   sourceSelectedCurrency: ICurrency | null;
@@ -46,7 +47,7 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [sourceAmount, setSourceAmount] = React.useState("0");
-
+  const [currencyId, setCurrencyId] = useState("");
   const [sourceCurrenciesList, setSourceCurrenciesList] =
     useState<ICurrency[]>();
 
@@ -106,19 +107,16 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
     setIsTargetCurrencyModalVisible(true);
   };
 
-  const handleDestinationCurrencySelect = (currency: ICurrency) => {
-    // Convert CurrencyType to DestinationCurrencyType
-    const destinationCurrency: IDestinationCurrencyType = {
-      ...currency,
-      market: currency.tradingPairId || "",
-    };
-    setDestinationSelectedCurrency(destinationCurrency);
+  const handleDestinationCurrencySelect = (
+    currency: IDestinationCurrencyType
+  ) => {
+    setDestinationSelectedCurrency(currency);
     setIsTargetCurrencyModalVisible(false);
   };
 
   const handleTargetCurrencySelect = (currency: ICurrency) => {
     setTargetCurrency(currency.id);
-
+    setCurrencyId(currency.id);
     const currencyId = currency.id;
     const pair = markets?.[currencyId];
 
@@ -140,7 +138,7 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
 
     setIsLoading(true);
     setError(null);
-
+    console.log(destinationSelectedCurrency.market, "market");
     try {
       const response = await postConvertCurrency(
         sourceAmount,
@@ -164,6 +162,7 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
     () => ({
       // State
       sourceAmount,
+      currencyId,
       sourceCurrenciesList,
       targetCurrency,
       sourceSelectedCurrency,
@@ -186,6 +185,7 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
       handleConvertCurrency,
     }),
     [
+      currencyId,
       sourceAmount,
       sourceCurrenciesList,
       targetCurrency,

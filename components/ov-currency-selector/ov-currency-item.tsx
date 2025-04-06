@@ -19,7 +19,6 @@ export const OVCurrencyItem: React.FC<ICurrencyItemProps> = ({
 }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
-
   return (
     <TouchableOpacity
       style={[

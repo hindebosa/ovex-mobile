@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { OVText } from "./ov-text";
 import useHome from "@/hooks/useHome";
 
-const OVDisplayResults = () => {
+export const OVResultsDisplay = () => {
   const { conversionResult, sourceSelectedCurrency } = useHome();
   return (
     conversionResult && (
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OVDisplayResults;
+export default OVResultsDisplay;

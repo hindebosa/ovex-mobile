@@ -4,6 +4,7 @@ export interface ICurrency {
   symbol: string;
   type: "coin" | "fiat";
   icon_url: string;
+  tradingPairId?: string;
 }
 
 export interface ICurrencyConversionResponse {
@@ -16,3 +17,18 @@ export interface ICurrencyConversionResponse {
   to_amount: string;
   to_currency: string;
 }
+
+export interface IDestinationCurrencyType extends ICurrency {
+  market: string;
+}
+export type TabType = "fiat" | "crypto";
+
+export type TradingPair = {
+  id: string;
+  base_currency: string;
+  quote_currency: string;
+};
+
+export type TradingPairsByQuoteCurrency = {
+  [quoteCurrency: string]: TradingPair[];
+};

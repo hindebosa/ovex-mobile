@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { OVCurrencySymbol } from "./ov-currency-symbol";
 import { OVDropdown } from "./ov-dropdown/ov-dropdown";
 import { OVText } from "./ov-text";
-import { Currency } from "@/types/currencies.type";
+import { ICurrency } from "@/types/currencies.type";
 import { OVDownArrow } from "./ov-down-arrow";
 import { OVCurrencyImage } from "./ov-dropdown/ov-currency-image";
 import useHome from "@/hooks/useHome";

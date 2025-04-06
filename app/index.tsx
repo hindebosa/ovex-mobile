@@ -1,18 +1,133 @@
 import OVConvertorView from "@/components/ov-convertor-view";
-import { OVCurrencySymbol } from "@/components/ov-currency-symbol";
-import { OVDropdown } from "@/components/ov-dropdown/ov-dropdown";
+import OVCurrencySelector from "@/components/ov-currency-selector/ov-currency-selector";
+import { OVModal } from "@/components/ov-modal";
+import { OVResultsDisplay } from "@/components/ov-result-display";
 import { OVText } from "@/components/ov-text";
-import { ICurrency } from "@/types/currencies.type";
-import React from "react";
+import useHome from "@/hooks/useHome";
+import {
+  ICurrency,
+  IDestinationCurrencyType,
+  TradingPairsByQuoteCurrency,
+} from "@/types/currencies.type";
+
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 const HomeScreen = () => {
+  const {
+    isOpenModal,
+    sourceCurrenciesList,
+    destinationSelectedCurrency,
+    setSourceSelectedCurrency,
+    setDestinationSelectedCurrency,
+  } = useHome();
+  const [activeCurrencySelector, setActiveCurrencySelector] = useState<
+    "target" | "destination"
+  >("target");
+  const [targetSelectedCurrency, setTargetSelectedCurrency] =
+    useState<ICurrency>();
+  const [markets, setMarkets] = useState<TradingPairsByQuoteCurrency>();
+  const [targetCurrency, setTargetCurrency] = useState("EUR");
+  const [isTargetCurrencyModalVisible, setIsTargetCurrencyModalVisible] =
+    useState(false);
+  const handleSourceCurrencySelect = (currency: ICurrency) => {
+    setSourceSelectedCurrency(currency);
+  };
+
+  const handleDestinationCurrencySelect = (currency: ICurrency) => {
+    // Convert CurrencyType to DestinationCurrencyType
+    const destinationCurrency: IDestinationCurrencyType = {
+      ...currency,
+      market: currency.tradingPairId || "",
+    };
+    setDestinationSelectedCurrency(destinationCurrency);
+    setIsTargetCurrencyModalVisible(false);
+  };
+
+  const handleTargetCurrencySelect = (currency: ICurrency) => {
+    setTargetCurrency(currency.id);
+    const currencyId = currency.id;
+    const pair = markets?.[currencyId];
+
+    const filterCurrenciesByTradingPairs = (
+      currencies: ICurrency[],
+      tradingPairs: any[]
+    ) => {
+      if (!currencies || !tradingPairs) return [];
+
+      // Create a map of currency IDs to their trading pair IDs
+      const currencyToPairMap = new Map<string, string>();
+
+      tradingPairs.forEach((pair) => {
+        currencyToPairMap.set(pair.base_currency, pair.id);
+      });
+
+      // Filter currencies and add trading pair ID as market
+      return currencies
+        .filter((currency) => currencyToPairMap.has(currency.id))
+        .map((currency) => ({
+          ...currency,
+          market: currencyToPairMap.get(currency.id) || "",
+        })) as IDestinationCurrencyType[];
+    };
+
+    if (sourceCurrenciesList && pair) {
+      const filteredCurrencies = filterCurrenciesByTradingPairs(
+        sourceCurrenciesList,
+        pair
+      );
+
+      setDestinationSelectedCurrency(filteredCurrencies[0]);
+    }
+
+    setTargetSelectedCurrency(currency);
+    isOpenModal.onFalse();
+    //setIsTargetCurrencyModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <OVText weight="bold">Convert Currency</OVText>
         <OVConvertorView />
+        <OVResultsDisplay />
       </View>
+      <OVModal visible={isOpenModal.value} onClose={isOpenModal.onFalse}>
+        <OVCurrencySelector
+          sourceCurrencies={
+            activeCurrencySelector === "target"
+              ? sourceCurrenciesList
+              : sourceCurrenciesList?.filter((currency) => {
+                  // When selecting destination currency, filter based on available trading pairs
+                  const pair = markets?.[targetCurrency];
+                  if (!pair) return false;
+
+                  // Get all base currencies from trading pairs
+                  const baseCurrencies = Object.values(pair).map(
+                    (p: any) => p.base_currency
+                  );
+
+                  // Only show currencies that have trading pairs with the target currency
+                  return baseCurrencies.includes(currency.id);
+                })
+          }
+          destinationCurrency={
+            activeCurrencySelector === "target"
+              ? undefined
+              : destinationSelectedCurrency
+          }
+          selectedCurrency={
+            activeCurrencySelector === "target"
+              ? targetCurrency
+              : destinationSelectedCurrency?.id
+          }
+          onSelect={
+            activeCurrencySelector === "target"
+              ? handleTargetCurrencySelect
+              : handleDestinationCurrencySelect
+          }
+        />
+      </OVModal>
     </View>
   );
 };

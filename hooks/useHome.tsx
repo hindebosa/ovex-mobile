@@ -1,18 +1,24 @@
 import {
   ICurrency,
   ICurrencyConversionResponse,
+  IDestinationCurrencyType,
 } from "@/types/currencies.type";
 
 import React, { useState } from "react";
+import { useBoolean } from "./useBoolean";
 
 const useHome = () => {
   const [sourceAmount, setSourceAmount] = React.useState("");
 
+  const isOpenModal = useBoolean();
+
   const [sourceSelectedCurrency, setSourceSelectedCurrency] =
     React.useState<ICurrency | null>(null);
 
+  const [sourceCurrenciesList, setSourceCurrenciesList] =
+    useState<ICurrency[]>();
   const [destinationSelectedCurrency, setDestinationSelectedCurrency] =
-    React.useState<ICurrency | null>(null);
+    React.useState<IDestinationCurrencyType | null>(null);
 
   const [activeCurrencySelector, setActiveCurrencySelector] = React.useState<
     "target" | "destination"
@@ -21,12 +27,11 @@ const useHome = () => {
   const [conversionResult, setConversionResult] =
     useState<ICurrencyConversionResponse | null>(null);
 
-  const [isTargetCurrencyModalVisible, setIsTargetCurrencyModalVisible] =
-    React.useState(false);
+  // Removed isTargetCurrencyModalVisible state as isOpenModal is used for modal visibility
 
   const openCurrencySelector = (type: "target" | "destination") => {
     setActiveCurrencySelector(type);
-    setIsTargetCurrencyModalVisible(true);
+    isOpenModal.onTrue();
   };
 
   return {
@@ -37,12 +42,14 @@ const useHome = () => {
     destinationSelectedCurrency,
     setDestinationSelectedCurrency,
     activeCurrencySelector,
-    isTargetCurrencyModalVisible,
-    setIsTargetCurrencyModalVisible,
+    // Removed isTargetCurrencyModalVisible as it is no longer needed
     openCurrencySelector,
     setActiveCurrencySelector,
     conversionResult,
     setConversionResult,
+    isOpenModal,
+    sourceCurrenciesList,
+    setSourceCurrenciesList,
   };
 };
 

@@ -15,7 +15,7 @@ type OVConvertorViewProps = {
   destinationSelectedCurrency?: ICurrency | null;
 };
 
-const OVConvertorView: FC<OVConvertorViewProps> = ({
+const OVConverterView: FC<OVConvertorViewProps> = ({
   openCurrencySelector,
   sourceSelectedCurrency,
   destinationSelectedCurrency,
@@ -42,7 +42,9 @@ const OVConvertorView: FC<OVConvertorViewProps> = ({
             <OVCurrencySymbol
               symbol={sourceSelectedCurrency?.id.toUpperCase()}
             />
-          ) : null
+          ) : (
+            <OVCurrencySymbol symbol={"USD"} />
+          )
         }
       />
       <View>
@@ -122,6 +124,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 12.5,
     color: "#8E8D99",
+    marginBottom: 8,
   },
   hiddenLink: {
     position: "absolute",
@@ -219,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OVConvertorView;
+export default OVConverterView;

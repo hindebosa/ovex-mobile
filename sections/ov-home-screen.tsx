@@ -26,7 +26,9 @@ const HomeView = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <OVText weight="bold">Convert Currency</OVText>
+        <OVText weight="bold" style={styles.header}>
+          Convert Currency
+        </OVText>
         <OVConvertorView
           destinationSelectedCurrency={destinationSelectedCurrency}
           openCurrencySelector={openCurrencySelector}
@@ -52,6 +54,7 @@ const HomeView = () => {
         </View>
       )}
       <OVModal
+        title="Select Currency"
         visible={isTargetCurrencyModalVisible}
         onClose={() => setIsTargetCurrencyModalVisible(false)}
       >
@@ -100,9 +103,13 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop: "5%",
-
     justifyContent: "center",
     alignItems: "center",
+  },
+  header: {
+    fontSize: 37.1,
+    marginBottom: 10,
+    color: "#000",
   },
   convertView: {
     width: "100%",
@@ -110,6 +117,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#FAFAFC",
   },
+
   targetLabel: {
     marginTop: 20,
     fontWeight: 400,

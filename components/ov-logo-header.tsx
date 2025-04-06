@@ -11,15 +11,6 @@ export const LogoHeader = () => {
   return (
     <View style={styles.logoContainer}>
       <CompanyLogo width={75} height={20} fill={logoColor} />
-      <Text
-        style={{
-          fontSize: 20,
-          color: logoColor,
-          fontFamily: "GilroyBold",
-        }}
-      >
-        Company Name
-      </Text>
     </View>
   );
 };

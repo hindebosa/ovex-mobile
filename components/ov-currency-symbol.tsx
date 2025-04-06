@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Colors } from "@/constants/Colors";
 import { OVText } from "./ov-text";
 
 interface CurrencySymbolProps {
@@ -24,7 +24,9 @@ export const OVCurrencySymbol: React.FC<CurrencySymbolProps> = ({
 
   return (
     <Component onPress={onPress} style={styles.currencyContainer}>
-      <OVText style={styles.currencySymbol}>{symbol}</OVText>
+      <OVText style={styles.currencySymbol} weight="bold">
+        {symbol}
+      </OVText>
     </Component>
   );
 };
@@ -37,6 +39,5 @@ const styles = StyleSheet.create({
   },
   currencySymbol: {
     fontSize: 21.6,
-    fontWeight: 700,
   },
 });

@@ -26,6 +26,7 @@ export const OVTab: FC<OVTabProps> = ({
     >
       <OVText
         style={[styles.tabText, activeTab === tabType && { color: "#5589FF" }]}
+        weight={activeTab === tabType ? "bold" : "regular"}
       >
         {label}
       </OVText>

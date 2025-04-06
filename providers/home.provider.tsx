@@ -45,7 +45,7 @@ const HomeContext = createContext<HomeContextType | undefined>(undefined);
 export const HomeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [sourceAmount, setSourceAmount] = React.useState("");
+  const [sourceAmount, setSourceAmount] = React.useState("0");
 
   const [sourceCurrenciesList, setSourceCurrenciesList] =
     useState<ICurrency[]>();

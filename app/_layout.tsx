@@ -12,9 +12,10 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaView, View, StyleSheet } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { LogoHeader } from "@/components/ov-logo-header";
+import { OVSafeAreaView } from "@/components/ov-safe-area-view";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,6 +24,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
+
   const [loaded] = useFonts({
     GilroyRegular: require("../assets/fonts/Gilroy/Gilroy-Regular.ttf"),
     GilroyMedium: require("../assets/fonts/Gilroy/Gilroy-Medium.ttf"),
@@ -45,8 +47,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaView
-        style={[styles.safeArea, { backgroundColor: theme.background }]}
+      <OVSafeAreaView
+        style={StyleSheet.flatten([
+          styles.safeArea,
+          { backgroundColor: theme.background },
+        ])}
       >
         <View style={[styles.container, { backgroundColor: theme.background }]}>
           <Stack
@@ -59,7 +64,7 @@ export default function RootLayout() {
               headerTitleStyle: {
                 fontFamily: Fonts.primary.regular,
               },
-              headerTitleComponent: () => <LogoHeader />,
+              headerTitle: () => <LogoHeader />, //
             }}
           >
             <Stack.Screen
@@ -77,7 +82,7 @@ export default function RootLayout() {
           </Stack>
           <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
         </View>
-      </SafeAreaView>
+      </OVSafeAreaView>
     </ThemeProvider>
   );
 }

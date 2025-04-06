@@ -47,15 +47,17 @@ const HomeView = () => {
         />
         <OVResultsDisplay />
       </View>
-      <TouchableOpacity
-        style={styles.convertButton}
-        onPress={handleConvertCurrency}
-        disabled={isLoading || !destinationSelectedCurrency}
-      >
-        <OVText style={styles.convertButtonText}>
-          {isLoading ? "Converting..." : "Convert"}
-        </OVText>
-      </TouchableOpacity>
+      <View style={styles.convertView}>
+        <TouchableOpacity
+          style={styles.convertButton}
+          onPress={handleConvertCurrency}
+          disabled={isLoading || !destinationSelectedCurrency}
+        >
+          <OVText style={styles.convertButtonText}>
+            {isLoading ? "Converting..." : "Convert"}
+          </OVText>
+        </TouchableOpacity>
+      </View>
 
       {error && (
         <View style={styles.errorContainer}>

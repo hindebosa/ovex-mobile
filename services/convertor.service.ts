@@ -1,13 +1,14 @@
 import { axiosInstance, endpoints } from "@/lib/axios";
 import { ICurrencyConversionResponse } from "@/types/currencies.type";
 import { groupByQuoteCurrency } from "@/util/currency";
+import { ToastAndroid } from "react-native";
 
 export const getAllCurrencies = async () => {
   try {
     const { data } = await axiosInstance.get(endpoints.allCurrencies);
     return data;
   } catch (error) {
-    console.error("Error fetching markets:", error);
+    ToastAndroid.show("Failed to convert!", ToastAndroid.SHORT);
     throw error;
   }
 };
@@ -18,7 +19,8 @@ export const getMarkets = async () => {
 
     return groupByQuoteCurrency(data);
   } catch (error) {
-    console.error("Error fetching fiat currencies:", error);
+    ToastAndroid.show("Failed to convert!", ToastAndroid.SHORT);
+
     throw error;
   }
 };
@@ -37,7 +39,7 @@ export const postConvertCurrency = async (
 
     return data;
   } catch (error) {
-    console.log("Error posting", error);
+    ToastAndroid.show("Failed to convert!", ToastAndroid.SHORT);
     throw error;
   }
 };

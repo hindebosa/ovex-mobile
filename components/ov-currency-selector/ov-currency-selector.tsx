@@ -145,10 +145,7 @@ const OVCurrencySelector: FC<CurrencySelectorProps> = ({
             style={styles.searchIcon}
           />
           <TextInput
-            style={[
-              styles.searchInput,
-              { color: theme.text, backgroundColor: "#fff" },
-            ]}
+            style={[styles.searchInput, { color: theme.text }]}
             placeholder={`Search ${activeTab}`}
             placeholderTextColor={theme.text + "80"}
             value={searchQuery}

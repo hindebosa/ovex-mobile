@@ -1,50 +1,135 @@
-# Welcome to your Expo app 👋
+# Ovex Currency Converter
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern, user-friendly currency converter application built with React Native.
 
-## Get started
+![Ovex Currency Converter](screenshots/app-screenshot.png)
 
-1. Install dependencies
+## Features
 
-   ```bash
+- **Intuitive Currency Conversion**: Easily convert between different currencies with a clean, modern interface
+- **Comprehensive Currency Support**: Access a wide range of fiat and cryptocurrency options
+- **Real-time Exchange Rates**: Get up-to-date conversion rates for accurate calculations
+- **Smart Currency Filtering**: Automatically filters available destination currencies based on your source selection
+- **Search Functionality**: Quickly find specific currencies with the built-in search feature
+- **Responsive Design**: Works seamlessly across different device sizes and orientations
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+- React Native development environment set up
+
+### Installation
+
+1. Clone the repository:
+
+   ```
+   git clone https://github.com/yourusername/ovex-app.git
+   cd ovex-app
+   ```
+
+2. Install dependencies:
+
+   ```
    npm install
+   # or
+   yarn install
    ```
 
-2. Start the app
+3. Start the development server:
 
-   ```bash
-    npx expo start
+   ```
+   npm start
+   # or
+   yarn start
    ```
 
-In the output, you'll find options to open the app in a
+4. Run on your device or emulator:
+   ```
+   npm run ios
+   # or
+   npm run android
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Project Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+ovex-app/
+├── app/                  # Main application screens
+│   └── index.tsx         # Home screen with currency converter
+├── components/           # Reusable UI components
+│   ├── CurrencyItem.tsx  # Individual currency option
+│   ├── CurrencySelector.tsx # Currency selection modal
+│   ├── Modal.tsx         # Reusable modal component
+│   ├── TextField.tsx     # Custom text input
+│   └── ...
+├── providers/            # Context providers
+│   └── HomeProvider.tsx  # State management for home screen
+├── services/             # API services
+│   └── convertor.service.ts # Currency conversion API
+├── types/                # TypeScript type definitions
+│   └── currency.ts       # Currency-related types
+└── ...
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Architecture
 
-## Learn more
+The application follows a component-based architecture with React Context for state management:
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Context API**: Uses React Context to manage application state
+- **Custom Hooks**: Implements custom hooks for accessing context and managing state
+- **Performance Optimization**: Utilizes useMemo and useCallback for better performance
+- **Separation of Concerns**: UI components are separated from business logic
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Key Components
 
-## Join the community
+### HomeProvider
 
-Join our community of developers creating universal apps.
+The `HomeProvider` manages the application state and business logic, including:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Currency data fetching
+- Currency selection handling
+- Conversion calculations
+- Error handling
+
+### CurrencySelector
+
+A modal component that allows users to:
+
+- Browse available currencies
+- Filter between fiat and crypto currencies
+- Search for specific currencies
+- Select source and destination currencies
+
+### CurrencyConverter
+
+The main UI component that:
+
+- Displays the conversion interface
+- Handles user input
+- Shows conversion results
+- Provides error feedback
+
+## API Integration
+
+The application integrates with external APIs to:
+
+- Fetch available currencies
+- Get current exchange rates
+- Perform currency conversions
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

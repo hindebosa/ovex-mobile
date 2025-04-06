@@ -4,22 +4,26 @@ import { OVModal } from "@/components/ov-modal";
 import { OVResultsDisplay } from "@/components/ov-result-display";
 import { OVText } from "@/components/ov-text";
 import useHome from "@/hooks/useHome";
-import { getAllCurrencies, getMarkets } from "@/services/convertor.service";
+import {
+  getAllCurrencies,
+  getMarkets,
+  postConvertCurrency,
+} from "@/services/convertor.service";
 import {
   ICurrency,
+  ICurrencyConversionResponse,
   IDestinationCurrencyType,
   TradingPairsByQuoteCurrency,
 } from "@/types/currencies.type";
 
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 
 const HomeScreen = () => {
   const {
-    isOpenModal,
     sourceCurrenciesList,
     destinationSelectedCurrency,
-    setSourceSelectedCurrency,
+    sourceAmount,
     setDestinationSelectedCurrency,
     setSourceCurrenciesList,
   } = useHome();
@@ -28,10 +32,18 @@ const HomeScreen = () => {
   >("target");
   const [targetSelectedCurrency, setTargetSelectedCurrency] =
     useState<ICurrency>();
+  const [conversionResult, setConversionResult] =
+    useState<ICurrencyConversionResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sourceSelectedCurrency, setSourceSelectedCurrency] =
+    React.useState<ICurrency | null>(null);
+  console.log("sourceSelectedCurrency", sourceSelectedCurrency);
   const [markets, setMarkets] = useState<TradingPairsByQuoteCurrency>();
   const [targetCurrency, setTargetCurrency] = useState("EUR");
   const [isTargetCurrencyModalVisible, setIsTargetCurrencyModalVisible] =
     useState(false);
+
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch market data
   useEffect(() => {
@@ -82,12 +94,13 @@ const HomeScreen = () => {
 
   const handleTargetCurrencySelect = (currency: ICurrency) => {
     setTargetCurrency(currency.id);
+
     const currencyId = currency.id;
     const pair = markets?.[currencyId];
 
     const filterCurrenciesByTradingPairs = (
       currencies: ICurrency[],
-      tradingPairs: any[]
+      tradingPairs: { base_currency: string; id: string }[]
     ) => {
       if (!currencies || !tradingPairs) return [];
 
@@ -116,16 +129,60 @@ const HomeScreen = () => {
       setDestinationSelectedCurrency(filteredCurrencies[0]);
     }
 
-    setTargetSelectedCurrency(currency);
+    setSourceSelectedCurrency(currency);
     setIsTargetCurrencyModalVisible(false);
   };
+
+  const handleConvertCurrency = async () => {
+    if (!destinationSelectedCurrency) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await postConvertCurrency(
+        sourceAmount,
+        destinationSelectedCurrency.market
+      );
+
+      if (response) {
+        setConversionResult(response);
+      } else {
+        setError("No conversion data received");
+      }
+    } catch (err) {
+      setError("Failed to convert currency. Please try again.");
+      console.error("Conversion error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <OVText weight="bold">Convert Currency</OVText>
-        <OVConvertorView openCurrencySelector={openCurrencySelector} />
+        <OVConvertorView
+          openCurrencySelector={openCurrencySelector}
+          sourceSelectedCurrency={sourceSelectedCurrency}
+        />
         <OVResultsDisplay />
       </View>
+      <TouchableOpacity
+        style={styles.convertButton}
+        onPress={handleConvertCurrency}
+        disabled={isLoading || !destinationSelectedCurrency}
+      >
+        <OVText style={styles.convertButtonText}>
+          {isLoading ? "Converting..." : "Convert"}
+        </OVText>
+      </TouchableOpacity>
+
+      {error && (
+        <View style={styles.errorContainer}>
+          <OVText style={styles.errorText}>{error}</OVText>
+        </View>
+      )}
       <OVModal
         visible={isTargetCurrencyModalVisible}
         onClose={() => setIsTargetCurrencyModalVisible(false)}

@@ -4,8 +4,12 @@ import { View, Image, StyleSheet } from "react-native";
 import { OVText } from "../ov-text";
 
 // Currency image component
-export const OVCurrencyImage = ({ currency }: { currency: ICurrency }) => {
-  if (currency.icon_url) {
+export const OVCurrencyImage = ({
+  currency,
+}: {
+  currency: ICurrency | null;
+}) => {
+  if (currency?.icon_url) {
     return (
       <View style={styles.currencyIconContainer}>
         <Image
@@ -19,7 +23,7 @@ export const OVCurrencyImage = ({ currency }: { currency: ICurrency }) => {
     return (
       <View style={styles.currencySymbolContainer}>
         <OVText style={styles.currencySymbol}>
-          {currency.symbol || currency.id}
+          {currency?.symbol || currency?.id}
         </OVText>
       </View>
     );

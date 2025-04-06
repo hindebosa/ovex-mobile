@@ -6,24 +6,20 @@ import { OVText } from "./ov-text";
 import { OVDownArrow } from "./ov-down-arrow";
 import { OVCurrencyImage } from "./ov-dropdown/ov-currency-image";
 import useHome from "@/hooks/useHome";
+import { ICurrency } from "@/types/currencies.type";
 
 type OVConvertorViewProps = {
   openCurrencySelector: (type: "target" | "destination") => void;
+  sourceSelectedCurrency: ICurrency | null;
 };
 
 const OVConvertorView: FC<OVConvertorViewProps> = ({
   openCurrencySelector,
+  sourceSelectedCurrency,
 }) => {
-  const {
-    sourceAmount,
-    setSourceAmount,
-    sourceSelectedCurrency,
-    destinationSelectedCurrency,
-    isOpenModal,
-  } = useHome();
-  if (__DEV__) {
-    console.log(isOpenModal.value);
-  }
+  const { sourceAmount, setSourceAmount, destinationSelectedCurrency } =
+    useHome();
+
   return (
     <View style={styles.convertView}>
       <OVText style={styles.targetLabel}>SOURCE AMOUNT</OVText>
@@ -51,16 +47,16 @@ const OVConvertorView: FC<OVConvertorViewProps> = ({
         <OVText style={styles.targetLabel}>SOURCE CURRENCY</OVText>
         <OVDropdown
           value={
-            destinationSelectedCurrency
-              ? `${destinationSelectedCurrency.id.toUpperCase()} ${
-                  destinationSelectedCurrency.name
+            sourceSelectedCurrency
+              ? `${sourceSelectedCurrency.id.toUpperCase()} ${
+                  sourceSelectedCurrency.name
                 }`
               : ""
           }
           placeholder="Select a Source"
           leftAdornment={
-            destinationSelectedCurrency ? (
-              <OVCurrencyImage currency={destinationSelectedCurrency} />
+            sourceSelectedCurrency ? (
+              <OVCurrencyImage currency={sourceSelectedCurrency} />
             ) : null
           }
           rightAdornment={

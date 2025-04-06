@@ -12,11 +12,9 @@ const useHome = () => {
 
   const isOpenModal = useBoolean();
 
-  const [sourceSelectedCurrency, setSourceSelectedCurrency] =
-    React.useState<ICurrency | null>(null);
-
   const [sourceCurrenciesList, setSourceCurrenciesList] =
     useState<ICurrency[]>();
+
   const [destinationSelectedCurrency, setDestinationSelectedCurrency] =
     React.useState<IDestinationCurrencyType | null>(null);
 
@@ -37,8 +35,7 @@ const useHome = () => {
   return {
     sourceAmount,
     setSourceAmount,
-    sourceSelectedCurrency,
-    setSourceSelectedCurrency,
+
     destinationSelectedCurrency,
     setDestinationSelectedCurrency,
     activeCurrencySelector,

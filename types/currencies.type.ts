@@ -33,3 +33,14 @@ export type TradingPair = {
 export type TradingPairsByQuoteCurrency = {
   [quoteCurrency: string]: TradingPair[];
 };
+
+export interface ICurrencyConversionResponse {
+  from_amount: string;
+  from_currency: string;
+  market: string;
+  message: string;
+  rate: string;
+  rate_is_from_currency: boolean;
+  to_amount: string;
+  to_currency: string;
+}

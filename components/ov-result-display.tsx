@@ -7,13 +7,16 @@ export const OVResultsDisplay = () => {
   return (
     conversionResult && (
       <View style={styles.resultRow}>
-        <OVText style={styles.resultValue}>
-          {conversionResult.from_currency.toUpperCase()}{" "}
-          {conversionResult.from_amount} {sourceSelectedCurrency?.name} =
+        <OVText style={styles.resultLabel} weight="bold">
+          {`${conversionResult.from_currency.toUpperCase()} ${
+            conversionResult.from_amount
+          } ${sourceSelectedCurrency?.name} = `}
         </OVText>
-        <OVText style={styles.resultValue}>
-          {conversionResult.to_amount}{" "}
-          {conversionResult.to_currency.toUpperCase()}
+        <OVText style={styles.resultValue} weight="bold">
+          {`${conversionResult.to_amount} ${
+            conversionResult.to_currency.charAt(0).toUpperCase() +
+            conversionResult.to_currency.slice(1).toLowerCase()
+          }`}
         </OVText>
       </View>
     )
@@ -22,19 +25,17 @@ export const OVResultsDisplay = () => {
 
 const styles = StyleSheet.create({
   resultRow: {
-    justifyContent: "space-between",
     marginBottom: 12,
     backgroundColor: "#F8F8F8",
+    paddingHorizontal: 22,
+
+    paddingVertical: 2,
   },
   resultLabel: {
     fontSize: 16,
-    fontWeight: "500",
-    color: "#8E8D99",
   },
   resultValue: {
-    fontSize: 16,
-    fontWeight: 700,
-    color: "#000",
+    fontSize: 25,
   },
 });
 

@@ -38,8 +38,8 @@ const HomeView = () => {
           openCurrencySelector={openCurrencySelector}
           sourceSelectedCurrency={sourceSelectedCurrency}
         />
-        <OVResultsDisplay />
       </View>
+      <OVResultsDisplay />
       <View style={styles.convertView}>
         <TouchableOpacity
           style={[
@@ -71,6 +71,8 @@ const HomeView = () => {
         onClose={() => setIsTargetCurrencyModalVisible(false)}
       >
         <OVCurrencySelector
+          // If the active currency selector is "target", use the full source currencies list.
+          // Otherwise, filter the source currencies by trading pairs based on the selected market and currency ID.
           sourceCurrencies={
             activeCurrencySelector === "target"
               ? sourceCurrenciesList

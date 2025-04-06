@@ -112,6 +112,7 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
   ) => {
     setDestinationSelectedCurrency(currency);
     setIsTargetCurrencyModalVisible(false);
+    setConversionResult(null);
   };
 
   const handleTargetCurrencySelect = (currency: ICurrency) => {
@@ -131,7 +132,6 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
 
     setSourceSelectedCurrency(currency);
     setIsTargetCurrencyModalVisible(false);
-
     setConversionResult(null);
   };
 

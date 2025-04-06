@@ -10,7 +10,7 @@ export const LogoHeader = () => {
 
   return (
     <View style={styles.logoContainer}>
-      <CompanyLogo width={75} height={20} fill={logoColor} />
+      <CompanyLogo width={75} height={20} />
     </View>
   );
 };

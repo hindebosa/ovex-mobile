@@ -48,3 +48,16 @@ export const filterCurrenciesByTradingPairs = (
       market: currencyToPairMap.get(currency.id) || "", // Add the trading pair ID as the "market" property
     })) as IDestinationCurrencyType[]; // Cast the result to the appropriate type
 };
+
+export const calculateSingleUnitValue = (
+  amount: number,
+  exchangeRate: number
+): number => {
+  // Ensure the amount is greater than 0 to avoid division by zero
+  if (amount <= 0) {
+    throw new Error("Amount must be greater than 0");
+  }
+
+  // Calculate the value of 1 unit of the currency
+  return parseFloat((exchangeRate / amount).toFixed(10));
+};

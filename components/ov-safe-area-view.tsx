@@ -32,6 +32,5 @@ const styles = StyleSheet.create({
   },
   androidSafeArea: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    height: Platform.OS === "android" ? 10 : undefined, // Adjust height for Android
   },
 });

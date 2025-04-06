@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import { OVText } from "../ov-text";
-import { DropdownAdornment } from "./dropdown-adornment";
+import { OVDropdownAdornment } from "./ov-dropdown-adornment";
 
 interface DropdownProps extends TextInputProps {
   leftAdornment?: React.ReactNode;
@@ -54,15 +54,21 @@ export const OVDropdown: React.FC<DropdownProps> = ({
           inputContainerStyle,
         ]}
       >
-        {DropdownAdornment(leftAdornment, onLeftAdornmentPress, "left")}
+        <OVDropdownAdornment
+          adornment={leftAdornment}
+          onPress={onLeftAdornmentPress}
+        />
 
         <TextInput
           style={[styles.input, { color: theme.text }, inputStyle]}
           placeholderTextColor={theme.icon}
           {...props}
         />
-
-        {DropdownAdornment(rightAdornment, onRightAdornmentPress, "right")}
+        <OVDropdownAdornment
+          adornment={rightAdornment}
+          onPress={onRightAdornmentPress}
+          position="right"
+        />
       </View>
 
       {error && <OVText style={styles.error}>{error}</OVText>}

@@ -1,10 +1,16 @@
+import { FC } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const DropdownAdornment = (
-  adornment: React.ReactNode,
-  onPress?: () => void,
-  position: "left" | "right" = "left"
-) => {
+type AdornmentProps = {
+  adornment: React.ReactNode;
+  onPress?: () => void;
+  position?: "left" | "right";
+};
+export const OVDropdownAdornment: FC<AdornmentProps> = ({
+  adornment,
+  onPress,
+  position = "left",
+}) => {
   if (!adornment) return null;
 
   const AdornmentWrapper = onPress ? TouchableOpacity : View;

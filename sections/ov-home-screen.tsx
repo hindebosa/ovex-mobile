@@ -6,7 +6,7 @@ import { OVText } from "@/components/ov-text";
 import { useHome } from "@/providers/home.provider";
 import { ICurrency, IDestinationCurrencyType } from "@/types/currencies.type";
 import { filterCurrenciesByTradingPairs } from "@/util/currency";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 
 const HomeView = () => {
   const {
@@ -28,80 +28,79 @@ const HomeView = () => {
     sourceAmount,
   } = useHome();
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <OVText weight="bold" style={styles.header}>
-          Convert Currency
-        </OVText>
-        <OVConvertorView
-          destinationSelectedCurrency={destinationSelectedCurrency}
-          openCurrencySelector={openCurrencySelector}
-          sourceSelectedCurrency={sourceSelectedCurrency}
-        />
-      </View>
-      <OVResultsDisplay />
-      <View style={styles.convertView}>
-        <TouchableOpacity
-          style={[
-            styles.convertButton,
-            (isLoading ||
-              !destinationSelectedCurrency ||
-              sourceAmount === "0") &&
-              styles.convertButtonDisabled,
-          ]}
-          onPress={handleConvertCurrency}
-          disabled={
-            isLoading || !destinationSelectedCurrency || sourceAmount === "0"
-          }
-        >
-          <OVText style={styles.convertButtonText}>
-            {isLoading ? "Converting..." : "Convert"}
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <OVText weight="bold" style={styles.header}>
+            Convert Currency
           </OVText>
-        </TouchableOpacity>
-      </View>
-
-      {error && (
-        <View style={styles.errorContainer}>
-          <OVText style={styles.errorText}>{error}</OVText>
+          <OVConvertorView />
         </View>
-      )}
-      <OVModal
-        title="Select Currency"
-        visible={isTargetCurrencyModalVisible}
-        onClose={() => setIsTargetCurrencyModalVisible(false)}
-      >
-        <OVCurrencySelector
-          // If the active currency selector is "target", use the full source currencies list.
-          // Otherwise, filter the source currencies by trading pairs based on the selected market and currency ID.
-          sourceCurrencies={
-            activeCurrencySelector === "target"
-              ? sourceCurrenciesList
-              : filterCurrenciesByTradingPairs(
-                  sourceCurrenciesList || [],
-                  markets?.[currencyId] || []
-                )
-          }
-          destinationCurrency={
-            activeCurrencySelector === "target"
-              ? undefined
-              : destinationSelectedCurrency
-          }
-          selectedCurrency={
-            activeCurrencySelector === "target"
-              ? targetCurrency
-              : destinationSelectedCurrency?.id
-          }
-          onSelect={
-            activeCurrencySelector === "target"
-              ? (currency) => handleTargetCurrencySelect(currency as ICurrency)
-              : (currency) =>
-                  handleDestinationCurrencySelect(
-                    currency as IDestinationCurrencyType
+        <OVResultsDisplay />
+        <View style={styles.convertView}>
+          <TouchableOpacity
+            style={[
+              styles.convertButton,
+              (isLoading ||
+                !destinationSelectedCurrency ||
+                sourceAmount === "0") &&
+                styles.convertButtonDisabled,
+            ]}
+            onPress={handleConvertCurrency}
+            disabled={
+              isLoading || !destinationSelectedCurrency || sourceAmount === "0"
+            }
+          >
+            <OVText style={styles.convertButtonText}>
+              {isLoading ? "Converting..." : "Convert"}
+            </OVText>
+          </TouchableOpacity>
+        </View>
+
+        {error && (
+          <View style={styles.errorContainer}>
+            <OVText style={styles.errorText}>{error}</OVText>
+          </View>
+        )}
+        <OVModal
+          title="Select Currency"
+          visible={isTargetCurrencyModalVisible}
+          onClose={() => setIsTargetCurrencyModalVisible(false)}
+        >
+          <OVCurrencySelector
+            // If the active currency selector is "target", use the full source currencies list.
+            // Otherwise, filter the source currencies by trading pairs based on the selected market and currency ID.
+            sourceCurrencies={
+              activeCurrencySelector === "target"
+                ? sourceCurrenciesList
+                : filterCurrenciesByTradingPairs(
+                    sourceCurrenciesList || [],
+                    markets?.[currencyId] || []
                   )
-          }
-        />
-      </OVModal>
-    </View>
+            }
+            destinationCurrency={
+              activeCurrencySelector === "target"
+                ? undefined
+                : destinationSelectedCurrency
+            }
+            selectedCurrency={
+              activeCurrencySelector === "target"
+                ? targetCurrency
+                : destinationSelectedCurrency?.id
+            }
+            onSelect={
+              activeCurrencySelector === "target"
+                ? (currency) =>
+                    handleTargetCurrencySelect(currency as ICurrency)
+                : (currency) =>
+                    handleDestinationCurrencySelect(
+                      currency as IDestinationCurrencyType
+                    )
+            }
+          />
+        </OVModal>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    marginTop: "5%",
+    marginTop: "2%",
     justifyContent: "center",
     alignItems: "center",
   },

@@ -6,21 +6,16 @@ import { OVText } from "./ov-text";
 import { OVDownArrow } from "./ov-down-arrow";
 import { OVCurrencyImage } from "./ov-dropdown/ov-currency-image";
 
-import { ICurrency } from "@/types/currencies.type";
 import { useHome } from "@/providers/home.provider";
 
-type OVConvertorViewProps = {
-  openCurrencySelector: (type: "target" | "destination") => void;
-  sourceSelectedCurrency: ICurrency | null;
-  destinationSelectedCurrency?: ICurrency | null;
-};
-
-const OVConverterView: FC<OVConvertorViewProps> = ({
-  openCurrencySelector,
-  sourceSelectedCurrency,
-  destinationSelectedCurrency,
-}) => {
-  const { sourceAmount, setSourceAmount } = useHome();
+const OVConverterView = ({}) => {
+  const {
+    sourceAmount,
+    setSourceAmount,
+    sourceSelectedCurrency,
+    destinationSelectedCurrency,
+    openCurrencySelector,
+  } = useHome();
 
   return (
     <View style={styles.convertView}>
@@ -57,6 +52,7 @@ const OVConverterView: FC<OVConvertorViewProps> = ({
                 }`
               : ""
           }
+          onTouchStart={() => openCurrencySelector("target")}
           placeholder="Select a Source Currency"
           leftAdornment={
             sourceSelectedCurrency ? (

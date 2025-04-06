@@ -52,12 +52,12 @@ export const filterCurrenciesByTradingPairs = (
 export const calculateSingleUnitValue = (
   amount: number,
   exchangeRate: number
-): number => {
+): string => {
   // Ensure the amount is greater than 0 to avoid division by zero
   if (amount <= 0) {
     throw new Error("Amount must be greater than 0");
   }
 
   // Calculate the value of 1 unit of the currency
-  return parseFloat((exchangeRate / amount).toFixed(10));
+  return (exchangeRate / amount).toFixed(10);
 };

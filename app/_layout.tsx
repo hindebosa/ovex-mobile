@@ -44,9 +44,9 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
+  //dark theme can be  implemented in the future
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <OVSafeAreaView
         style={StyleSheet.flatten([
           styles.safeArea,

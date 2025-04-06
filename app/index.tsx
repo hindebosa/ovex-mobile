@@ -34,6 +34,11 @@ const HomeScreen = () => {
     setSourceSelectedCurrency(currency);
   };
 
+  const openCurrencySelector = (type: "target" | "destination") => {
+    setActiveCurrencySelector(type);
+    setIsTargetCurrencyModalVisible(true);
+  };
+
   const handleDestinationCurrencySelect = (currency: ICurrency) => {
     // Convert CurrencyType to DestinationCurrencyType
     const destinationCurrency: IDestinationCurrencyType = {
@@ -89,10 +94,13 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.content}>
         <OVText weight="bold">Convert Currency</OVText>
-        <OVConvertorView />
+        <OVConvertorView openCurrencySelector={openCurrencySelector} />
         <OVResultsDisplay />
       </View>
-      <OVModal visible={isOpenModal.value} onClose={isOpenModal.onFalse}>
+      <OVModal
+        visible={isTargetCurrencyModalVisible}
+        onClose={isOpenModal.onFalse}
+      >
         <OVCurrencySelector
           sourceCurrencies={
             activeCurrencySelector === "target"

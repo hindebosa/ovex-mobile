@@ -8,14 +8,21 @@ import { OVDownArrow } from "./ov-down-arrow";
 import { OVCurrencyImage } from "./ov-dropdown/ov-currency-image";
 import useHome from "@/hooks/useHome";
 
-const OVConvertorView = () => {
+type OVConvertorViewProps = {
+  openCurrencySelector: (type: "target" | "destination") => void;
+};
+
+const OVConvertorView: FC<OVConvertorViewProps> = ({
+  openCurrencySelector,
+}) => {
   const {
     sourceAmount,
     setSourceAmount,
     sourceSelectedCurrency,
     destinationSelectedCurrency,
-    openCurrencySelector,
+    isOpenModal,
   } = useHome();
+  console.log(isOpenModal.value);
   return (
     <View style={styles.convertView}>
       <OVText style={styles.targetLabel}>SOURCE AMOUNT</OVText>
@@ -56,7 +63,9 @@ const OVConvertorView = () => {
             ) : null
           }
           rightAdornment={
-            <TouchableOpacity onPress={() => openCurrencySelector("target")}>
+            <TouchableOpacity
+              onPress={() => openCurrencySelector("destination")}
+            >
               <OVDownArrow />
             </TouchableOpacity>
           }

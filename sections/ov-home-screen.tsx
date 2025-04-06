@@ -4,19 +4,6 @@ import { OVModal } from "@/components/ov-modal";
 import OVResultsDisplay from "@/components/ov-result-display";
 import { OVText } from "@/components/ov-text";
 import { useHome } from "@/providers/home.provider";
-
-import {
-  getMarkets,
-  getAllCurrencies,
-  postConvertCurrency,
-} from "@/services/convertor.service";
-import {
-  ICurrency,
-  IDestinationCurrencyType,
-  ICurrencyConversionResponse,
-  TradingPairsByQuoteCurrency,
-} from "@/types/currencies.type";
-import { useState, useEffect } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 
 const HomeView = () => {

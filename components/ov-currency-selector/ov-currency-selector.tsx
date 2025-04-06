@@ -55,16 +55,19 @@ const OVCurrencySelector: FC<CurrencySelectorProps> = ({
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const handleSearchChange = useCallback((text: string) => {
-    setIsSearching(true);
-    setSearchQuery(text);
-  }, []);
+  const handleSearchChange = useCallback(
+    (text: string) => {
+      // setIsSearching(true);
+      setSearchQuery(text);
+    },
+    [setSearchQuery, setIsSearching]
+  );
 
   useEffect(() => {
     if (debouncedSearchQuery) {
-      setIsSearching(false);
+      handleSearchChange(debouncedSearchQuery);
     }
-  }, [debouncedSearchQuery]);
+  }, [debouncedSearchQuery, handleSearchChange]);
 
   useEffect(() => {
     handleSearchChange(debouncedSearchQuery);
@@ -102,7 +105,6 @@ const OVCurrencySelector: FC<CurrencySelectorProps> = ({
     coinCurrencies,
     destinationCurrency,
   ]);
-
   return (
     <View style={styles.container}>
       <View style={styles.tabsContainer}>

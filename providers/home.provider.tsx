@@ -62,7 +62,6 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [sourceSelectedCurrency, setSourceSelectedCurrency] =
     React.useState<ICurrency | null>(null);
-  console.log("sourceSelectedCurrency", sourceSelectedCurrency);
   const [markets, setMarkets] = useState<TradingPairsByQuoteCurrency>();
   const [targetCurrency, setTargetCurrency] = useState("EUR");
   const [isTargetCurrencyModalVisible, setIsTargetCurrencyModalVisible] =

@@ -34,7 +34,7 @@ interface HomeContextType {
   setSourceAmount: (amount: string) => void;
   handleTargetCurrencySelect: (currency: ICurrency) => void;
   handleSourceCurrencySelect: (currency: ICurrency) => void;
-  handleDestinationCurrencySelect: (currency: ICurrency) => void;
+  handleDestinationCurrencySelect: (currency: IDestinationCurrencyType) => void;
   openCurrencySelector: (type: "target" | "destination") => void;
   setIsTargetCurrencyModalVisible: (visible: boolean) => void;
   handleConvertCurrency: () => Promise<void>;
@@ -138,7 +138,6 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
 
     setIsLoading(true);
     setError(null);
-    console.log(destinationSelectedCurrency.market, "market");
     try {
       const response = await postConvertCurrency(
         sourceAmount,

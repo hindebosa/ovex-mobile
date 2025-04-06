@@ -131,6 +131,8 @@ export const HomeProvider: React.FC<{ children: ReactNode }> = ({
 
     setSourceSelectedCurrency(currency);
     setIsTargetCurrencyModalVisible(false);
+
+    setConversionResult(null);
   };
 
   const handleConvertCurrency = async () => {

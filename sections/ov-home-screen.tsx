@@ -4,6 +4,7 @@ import { OVModal } from "@/components/ov-modal";
 import OVResultsDisplay from "@/components/ov-result-display";
 import { OVText } from "@/components/ov-text";
 import { useHome } from "@/providers/home.provider";
+import { ICurrency, IDestinationCurrencyType } from "@/types/currencies.type";
 import { filterCurrenciesByTradingPairs } from "@/util/currency";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -24,6 +25,7 @@ const HomeView = () => {
     markets,
     targetCurrency,
     currencyId,
+    sourceAmount,
   } = useHome();
   return (
     <View style={styles.container}>
@@ -40,9 +42,17 @@ const HomeView = () => {
       </View>
       <View style={styles.convertView}>
         <TouchableOpacity
-          style={styles.convertButton}
+          style={[
+            styles.convertButton,
+            (isLoading ||
+              !destinationSelectedCurrency ||
+              sourceAmount === "0") &&
+              styles.convertButtonDisabled,
+          ]}
           onPress={handleConvertCurrency}
-          disabled={isLoading || !destinationSelectedCurrency}
+          disabled={
+            isLoading || !destinationSelectedCurrency || sourceAmount === "0"
+          }
         >
           <OVText style={styles.convertButtonText}>
             {isLoading ? "Converting..." : "Convert"}
@@ -68,19 +78,6 @@ const HomeView = () => {
                   sourceCurrenciesList || [],
                   markets?.[currencyId] || []
                 )
-            // : sourceCurrenciesList?.filter((currency) => {
-            //     // When selecting destination currency, filter based on available trading pairs
-            //     const pair = markets?.[targetCurrency];
-            //     if (!pair) return false;
-
-            //     // Get all base currencies from trading pairs
-            //     const baseCurrencies = Object.values(pair).map(
-            //       (p: any) => p.base_currency
-            //     );
-
-            //     // Only show currencies that have trading pairs with the target currency
-            //     return baseCurrencies.includes(currency.id);
-            //   })
           }
           destinationCurrency={
             activeCurrencySelector === "target"
@@ -94,8 +91,11 @@ const HomeView = () => {
           }
           onSelect={
             activeCurrencySelector === "target"
-              ? handleTargetCurrencySelect
-              : handleDestinationCurrencySelect
+              ? (currency) => handleTargetCurrencySelect(currency as ICurrency)
+              : (currency) =>
+                  handleDestinationCurrencySelect(
+                    currency as IDestinationCurrencyType
+                  )
           }
         />
       </OVModal>
@@ -142,6 +142,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 1,
+  },
+  convertButtonDisabled: {
+    backgroundColor: "#A6A6A6",
   },
   currencyIcon: {
     width: 24,

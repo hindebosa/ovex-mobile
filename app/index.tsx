@@ -4,13 +4,14 @@ import { OVModal } from "@/components/ov-modal";
 import { OVResultsDisplay } from "@/components/ov-result-display";
 import { OVText } from "@/components/ov-text";
 import useHome from "@/hooks/useHome";
+import { getAllCurrencies, getMarkets } from "@/services/convertor.service";
 import {
   ICurrency,
   IDestinationCurrencyType,
   TradingPairsByQuoteCurrency,
 } from "@/types/currencies.type";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 const HomeScreen = () => {
@@ -20,6 +21,7 @@ const HomeScreen = () => {
     destinationSelectedCurrency,
     setSourceSelectedCurrency,
     setDestinationSelectedCurrency,
+    setSourceCurrenciesList,
   } = useHome();
   const [activeCurrencySelector, setActiveCurrencySelector] = useState<
     "target" | "destination"
@@ -30,6 +32,35 @@ const HomeScreen = () => {
   const [targetCurrency, setTargetCurrency] = useState("EUR");
   const [isTargetCurrencyModalVisible, setIsTargetCurrencyModalVisible] =
     useState(false);
+
+  // Fetch market data
+  useEffect(() => {
+    const fetchMarkets = async () => {
+      try {
+        const marketData = await getMarkets();
+        setMarkets(marketData);
+      } catch (error) {
+        console.error("Error fetching currencies:", error);
+      }
+    };
+
+    fetchMarkets();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllCurrencies = async () => {
+      try {
+        const marketData = await getAllCurrencies();
+
+        setSourceCurrenciesList(marketData);
+      } catch (error) {
+        console.error("Error fetching markets:", error);
+      }
+    };
+
+    fetchAllCurrencies();
+  }, []);
+
   const handleSourceCurrencySelect = (currency: ICurrency) => {
     setSourceSelectedCurrency(currency);
   };
@@ -88,7 +119,6 @@ const HomeScreen = () => {
     setTargetSelectedCurrency(currency);
     setIsTargetCurrencyModalVisible(false);
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.content}>

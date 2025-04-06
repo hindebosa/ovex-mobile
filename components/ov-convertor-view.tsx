@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { OVCurrencySymbol } from "./ov-currency-symbol";
 import { OVDropdown } from "./ov-dropdown/ov-dropdown";
 import { OVText } from "./ov-text";
-import { ICurrency } from "@/types/currencies.type";
 import { OVDownArrow } from "./ov-down-arrow";
 import { OVCurrencyImage } from "./ov-dropdown/ov-currency-image";
 import useHome from "@/hooks/useHome";
@@ -22,7 +21,9 @@ const OVConvertorView: FC<OVConvertorViewProps> = ({
     destinationSelectedCurrency,
     isOpenModal,
   } = useHome();
-  console.log(isOpenModal.value);
+  if (__DEV__) {
+    console.log(isOpenModal.value);
+  }
   return (
     <View style={styles.convertView}>
       <OVText style={styles.targetLabel}>SOURCE AMOUNT</OVText>
@@ -54,7 +55,7 @@ const OVConvertorView: FC<OVConvertorViewProps> = ({
               ? `${destinationSelectedCurrency.id.toUpperCase()} ${
                   destinationSelectedCurrency.name
                 }`
-              : " "
+              : ""
           }
           placeholder="Select a Source"
           leftAdornment={
@@ -63,9 +64,7 @@ const OVConvertorView: FC<OVConvertorViewProps> = ({
             ) : null
           }
           rightAdornment={
-            <TouchableOpacity
-              onPress={() => openCurrencySelector("destination")}
-            >
+            <TouchableOpacity onPress={() => openCurrencySelector("target")}>
               <OVDownArrow />
             </TouchableOpacity>
           }

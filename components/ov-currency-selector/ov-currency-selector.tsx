@@ -32,6 +32,7 @@ const OVCurrencySelector: FC<CurrencySelectorProps> = ({
   sourceCurrencies,
   destinationCurrency,
 }) => {
+  // Removed debug log for production
   const [activeTab, setActiveTab] = useState<TabType>("crypto");
 
   const colorScheme = useColorScheme();

@@ -5,13 +5,14 @@ import { OVDropdown } from "./ov-dropdown/ov-dropdown";
 import { OVText } from "./ov-text";
 import { OVDownArrow } from "./ov-down-arrow";
 import { OVCurrencyImage } from "./ov-dropdown/ov-currency-image";
-import useHome from "@/hooks/useHome";
+
 import { ICurrency } from "@/types/currencies.type";
+import { useHome } from "@/providers/home.provider";
 
 type OVConvertorViewProps = {
   openCurrencySelector: (type: "target" | "destination") => void;
   sourceSelectedCurrency: ICurrency | null;
-  destinationSelectedCurrency: ICurrency | null;
+  destinationSelectedCurrency?: ICurrency | null;
 };
 
 const OVConvertorView: FC<OVConvertorViewProps> = ({

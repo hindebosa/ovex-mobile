@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { OVText } from "./ov-text";
-import useHome from "@/hooks/useHome";
+import { useHome } from "@/providers/home.provider";
 
 export const OVResultsDisplay = () => {
   const { conversionResult, sourceSelectedCurrency } = useHome();

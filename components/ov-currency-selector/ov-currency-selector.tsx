@@ -15,7 +15,6 @@ import { OVTab } from "./ov-tab";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useDebounce } from "@/hooks/useDeBouncer";
-import useHome from "@/hooks/useHome";
 import OVLoading from "../ov-loading";
 import OVCurrencyList from "../ov-currency-list";
 
@@ -32,7 +31,6 @@ const OVCurrencySelector: FC<CurrencySelectorProps> = ({
   sourceCurrencies,
   destinationCurrency,
 }) => {
-  // Removed debug log for production
   const [activeTab, setActiveTab] = useState<TabType>("crypto");
 
   const colorScheme = useColorScheme();
@@ -60,8 +58,13 @@ const OVCurrencySelector: FC<CurrencySelectorProps> = ({
   const handleSearchChange = useCallback((text: string) => {
     setIsSearching(true);
     setSearchQuery(text);
-    setIsSearching(false);
   }, []);
+
+  useEffect(() => {
+    if (debouncedSearchQuery) {
+      setIsSearching(false);
+    }
+  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     handleSearchChange(debouncedSearchQuery);

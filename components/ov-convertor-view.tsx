@@ -11,14 +11,15 @@ import { ICurrency } from "@/types/currencies.type";
 type OVConvertorViewProps = {
   openCurrencySelector: (type: "target" | "destination") => void;
   sourceSelectedCurrency: ICurrency | null;
+  destinationSelectedCurrency: ICurrency | null;
 };
 
 const OVConvertorView: FC<OVConvertorViewProps> = ({
   openCurrencySelector,
   sourceSelectedCurrency,
+  destinationSelectedCurrency,
 }) => {
-  const { sourceAmount, setSourceAmount, destinationSelectedCurrency } =
-    useHome();
+  const { sourceAmount, setSourceAmount } = useHome();
 
   return (
     <View style={styles.convertView}>

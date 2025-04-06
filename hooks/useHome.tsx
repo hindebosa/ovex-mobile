@@ -1,7 +1,6 @@
 import {
   ICurrency,
   ICurrencyConversionResponse,
-  IDestinationCurrencyType,
 } from "@/types/currencies.type";
 
 import React, { useState } from "react";
@@ -15,9 +14,6 @@ const useHome = () => {
   const [sourceCurrenciesList, setSourceCurrenciesList] =
     useState<ICurrency[]>();
 
-  const [destinationSelectedCurrency, setDestinationSelectedCurrency] =
-    React.useState<IDestinationCurrencyType | null>(null);
-
   const [activeCurrencySelector, setActiveCurrencySelector] = React.useState<
     "target" | "destination"
   >("target");
@@ -29,15 +25,12 @@ const useHome = () => {
 
   const openCurrencySelector = (type: "target" | "destination") => {
     setActiveCurrencySelector(type);
-    isOpenModal.onTrue();
   };
 
   return {
     sourceAmount,
     setSourceAmount,
 
-    destinationSelectedCurrency,
-    setDestinationSelectedCurrency,
     activeCurrencySelector,
     // Removed isTargetCurrencyModalVisible as it is no longer needed
     openCurrencySelector,

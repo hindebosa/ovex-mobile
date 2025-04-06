@@ -22,9 +22,9 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 const HomeScreen = () => {
   const {
     sourceCurrenciesList,
-    destinationSelectedCurrency,
+
     sourceAmount,
-    setDestinationSelectedCurrency,
+
     setSourceCurrenciesList,
   } = useHome();
   const [activeCurrencySelector, setActiveCurrencySelector] = useState<
@@ -32,6 +32,8 @@ const HomeScreen = () => {
   >("target");
   const [targetSelectedCurrency, setTargetSelectedCurrency] =
     useState<ICurrency>();
+  const [destinationSelectedCurrency, setDestinationSelectedCurrency] =
+    React.useState<IDestinationCurrencyType | null>(null);
   const [conversionResult, setConversionResult] =
     useState<ICurrencyConversionResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -163,6 +165,7 @@ const HomeScreen = () => {
       <View style={styles.content}>
         <OVText weight="bold">Convert Currency</OVText>
         <OVConvertorView
+          destinationSelectedCurrency={destinationSelectedCurrency}
           openCurrencySelector={openCurrencySelector}
           sourceSelectedCurrency={sourceSelectedCurrency}
         />
